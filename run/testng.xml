@@ -1,0 +1,25 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Selenide example" verbose="1" thread-count="2" parallel="false">
+    <listeners>
+        <listener class-name="listeners.TestListener"/>
+    </listeners>
+    <!--
+         *browser* can be chrome, firefox, ie
+         *headless* is optional
+    -->
+    <test name="Regression on chrome">
+        <parameter name="browser" value="chrome"/>
+        <parameter name="headless" value="false"/>
+        <classes>
+            <class name="poc.RegisterTest"/>
+        </classes>
+    </test>
+
+<!--    <test name="Regression on firefox">-->
+<!--        <parameter name="browser" value="firefox"/>-->
+<!--        <parameter name="headless" value="false"/>-->
+<!--        <classes>-->
+<!--            <class name="poc.RegisterTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+</suite>
