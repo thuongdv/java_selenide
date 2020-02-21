@@ -1,9 +1,10 @@
-package pages;
+package com.demo.pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import com.demo.reports.Report;
+import com.demo.utils.DateTimeUtil;
 import org.openqa.selenium.By;
-import utils.DateTimeUtil;
 
 import java.util.HashMap;
 
@@ -23,14 +24,8 @@ public class RegisterPage extends CommonPage {
     private final SelenideElement repeatPasswordTxt = $(By.cssSelector("input[id='repeatedPassword']"));
     private final SelenideElement registerBtn = $(By.cssSelector("input[type='submit'][value='Register']"));
 
-    public HashMap<String, String> register() {
-        HashMap<String, String> accInfo = this.defaultAccountInfo();
-        this.register(accInfo);
-
-        return accInfo;
-    }
-
     public void register(HashMap<String, String> accInfo) {
+        Report.debug("Register with the following info: " + accInfo.toString());
         this.enterIfHasKey(accInfo, "firstName", firstNameTxt);
         this.enterIfHasKey(accInfo, "lastName", lastNameTxt);
         this.enterIfHasKey(accInfo, "address", addressTxt);
@@ -45,7 +40,7 @@ public class RegisterPage extends CommonPage {
         registerBtn.click();
     }
 
-    private HashMap<String, String> defaultAccountInfo() {
+    public static HashMap<String, String> defaultAccountInfo() {
         HashMap<String, String> accInfo = new HashMap<>();
         accInfo.put("firstName", "ftest");
         accInfo.put("lastName", "ltest");
@@ -63,7 +58,9 @@ public class RegisterPage extends CommonPage {
     }
 
     public void verifyRegisterSuccessfully(HashMap<String, String> accInfo) {
-        String expected = String.format("Welcome %s %s", accInfo.get("firstName"), accInfo.get("lastName"));
+        String expected = String.format("Welcome %s %s===============", accInfo.get("firstName"), accInfo.get("lastName"));
+
+        Report.debug("Verify welcome message displays: " + expected);
         this.lblWelcome.shouldHave(Condition.text(expected));
     }
 }

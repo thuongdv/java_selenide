@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="Selenide example" verbose="1" thread-count="2" parallel="false">
     <listeners>
-        <listener class-name="listeners.TestListener"/>
+        <listener class-name="com.demo.listeners.TestListener"/>
     </listeners>
     <!--
          *browser* can be chrome, firefox, ie
@@ -11,7 +11,7 @@
         <parameter name="browser" value="chrome"/>
         <parameter name="headless" value="false"/>
         <classes>
-            <class name="poc.RegisterTest"/>
+            <class name="com.demo.RegisterTest"/>
         </classes>
     </test>
 
@@ -19,7 +19,7 @@
 <!--        <parameter name="browser" value="firefox"/>-->
 <!--        <parameter name="headless" value="false"/>-->
 <!--        <classes>-->
-<!--            <class name="poc.RegisterTest"/>-->
+<!--            <class name="com.demo.RegisterTest"/>-->
 <!--        </classes>-->
 <!--    </test>-->
 </suite>

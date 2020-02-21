@@ -1,4 +1,4 @@
-package pages;
+package com.demo.pages;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;

@@ -1,15 +1,22 @@
-package poc;
+package com.demo;
 
 import com.codeborne.selenide.Configuration;
+import com.demo.reports.Report;
 import org.testng.annotations.*;
-import reports.Report;
+
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Selenide.*;
 
 public class TestBase {
     @BeforeSuite
     public void beforeSuite() {
-        Report.setReport();
+        String reportFolder = String.join(File.separator, "ExtentReport", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MMM_dd-HH_mm_ss")));
+        Report.setReport(reportFolder);
+        Configuration.browserSize = "1440x900";
+        Configuration.reportsFolder = reportFolder;
     }
 
     @Parameters({"browser", "headless"})

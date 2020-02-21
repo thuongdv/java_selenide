@@ -1,0 +1,32 @@
+package com.demo.listeners;
+
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.demo.reports.Report;
+import com.demo.reports.extentreports.ExtentTestManager;
+import com.demo.utils.ThrowableReport;
+import com.google.common.io.Files;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
+
+public class TestListener implements ITestListener {
+    @Override
+    public void onTestStart(ITestResult result) {
+        Report.setReportTest(result.getMethod().getDescription());
+    }
+
+    @Override
+    public void onTestFailure(ITestResult result) {
+        Throwable throwable = result.getThrowable();
+        ExtentTestManager.getExtentTest().fatal(ThrowableReport.newThrowable(throwable));
+        ExtentTest node = ExtentTestManager.getExtentTest().createNode("Debugger information");
+        String screenshot = null;//ThrowableReport.getScreenshot(throwable);
+        try {
+            String file = Files.getNameWithoutExtension(screenshot);
+            node.fatal("", MediaEntityBuilder.createScreenCaptureFromPath(screenshot).build());
+            node.fatal(String.format("<a href=\"%s.html\" target=\"_blank\">Page source</a>", file));
+        } catch (Exception e) {
+            node.fatal(ThrowableReport.newThrowable(e));;
+        }
+    }
+}

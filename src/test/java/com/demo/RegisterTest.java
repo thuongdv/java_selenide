@@ -1,9 +1,9 @@
-package poc;
+package com.demo;
 
+import com.demo.pages.HomePage;
+import com.demo.pages.RegisterPage;
+import com.demo.reports.Report;
 import org.testng.annotations.Test;
-import pages.HomePage;
-import pages.RegisterPage;
-import reports.Report;
 
 import java.util.HashMap;
 
@@ -15,8 +15,11 @@ public class RegisterTest extends TestBase {
         homePage.goToRegisterPage();
 
         Report.info("2. Register");
+        HashMap<String, String> accInfo = RegisterPage.defaultAccountInfo();
         RegisterPage registerPage = new RegisterPage();
-        HashMap<String, String> accInfo = registerPage.register();
+        registerPage.register(accInfo);
+
+        Report.info("VP: Register successfully");
         registerPage.verifyRegisterSuccessfully(accInfo);
     }
 
@@ -29,5 +32,7 @@ public class RegisterTest extends TestBase {
         Report.info("2. Register");
         RegisterPage registerPage = new RegisterPage();
         registerPage.register(new HashMap<>());
+
+        Report.info("VP: Register not successfully");
     }
 }
