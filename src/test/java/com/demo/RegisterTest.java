@@ -15,9 +15,8 @@ public class RegisterTest extends TestBase {
         homePage.goToRegisterPage();
 
         Report.info("2. Register");
-        HashMap<String, String> accInfo = RegisterPage.defaultAccountInfo();
         RegisterPage registerPage = new RegisterPage();
-        registerPage.register(accInfo);
+        HashMap<String, String> accInfo = registerPage.register();
 
         Report.info("VP: Register successfully");
         registerPage.verifyRegisterSuccessfully(accInfo);

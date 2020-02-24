@@ -18,15 +18,17 @@ public class TestListener implements ITestListener {
     @Override
     public void onTestFailure(ITestResult result) {
         Throwable throwable = result.getThrowable();
+        String ba = ThrowableReport.usefulMessage(throwable);
+        //ExtentTestManager.getExtentTest().fatal(ThrowableReport.usefulMessage(throwable));
         ExtentTestManager.getExtentTest().fatal(ThrowableReport.newThrowable(throwable));
         ExtentTest node = ExtentTestManager.getExtentTest().createNode("Debugger information");
-        String screenshot = null;//ThrowableReport.getScreenshot(throwable);
+        String screenshot = ThrowableReport.getScreenshot(throwable);
         try {
             String file = Files.getNameWithoutExtension(screenshot);
             node.fatal("", MediaEntityBuilder.createScreenCaptureFromPath(screenshot).build());
             node.fatal(String.format("<a href=\"%s.html\" target=\"_blank\">Page source</a>", file));
         } catch (Exception e) {
-            node.fatal(ThrowableReport.newThrowable(e));;
+            node.fatal(ThrowableReport.newThrowable(e));
         }
     }
 }

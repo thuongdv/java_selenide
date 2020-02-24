@@ -24,6 +24,13 @@ public class RegisterPage extends CommonPage {
     private final SelenideElement repeatPasswordTxt = $(By.cssSelector("input[id='repeatedPassword']"));
     private final SelenideElement registerBtn = $(By.cssSelector("input[type='submit'][value='Register']"));
 
+    public HashMap<String, String> register() {
+        HashMap<String, String> accInfo = defaultAccountInfo();
+        this.register(accInfo);
+
+        return accInfo;
+    }
+
     public void register(HashMap<String, String> accInfo) {
         Report.debug("Register with the following info: " + accInfo.toString());
         this.enterIfHasKey(accInfo, "firstName", firstNameTxt);
