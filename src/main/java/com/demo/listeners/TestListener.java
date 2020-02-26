@@ -26,7 +26,10 @@ public class TestListener implements ITestListener {
         try {
             String file = Files.getNameWithoutExtension(screenshot);
             node.fatal("", MediaEntityBuilder.createScreenCaptureFromPath(screenshot).build());
-            node.fatal(String.format("<a href=\"%s.html\" target=\"_blank\">Page source</a>", file));
+            String pageSourceLink = """
+                                        <a href="%s.html" target="_blank">Page source</a>
+                                    """;
+            node.fatal(String.format(pageSourceLink, file));
         } catch (Exception e) {
             node.fatal(ThrowableReport.newThrowable(e));
         }
