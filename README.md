@@ -2,7 +2,7 @@
 This is an example of using Selenide test framework.
 
 # Pre-requites
-+ Install Java 13 or above
++ Install Java 8 or above
 + Install Maven
 
 # Install dependencies
@@ -12,4 +12,4 @@ This is an example of using Selenide test framework.
 # Run test and view result
 1. Type `mvn test` to run test
 
-The test result is located in the ExtentReport folder
+The test result locates in the test-ouput folder

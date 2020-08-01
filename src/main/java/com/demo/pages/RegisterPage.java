@@ -3,7 +3,7 @@ package com.demo.pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.demo.reports.Report;
-import com.demo.utils.DateTimeUtil;
+import com.demo.helpers.DateTimeHelper;
 import org.openqa.selenium.By;
 
 import java.util.HashMap;
@@ -57,7 +57,7 @@ public class RegisterPage extends CommonPage {
         accInfo.put("zipCode", "55555");
         accInfo.put("phone", "0123456789");
         accInfo.put("ssn", "123456789");
-        accInfo.put("username", DateTimeUtil.current("yyyy-MM-dd_HH-mm-ss"));
+        accInfo.put("username", DateTimeHelper.current("yyyy-MM-dd_HH-mm-ss"));
         accInfo.put("password", "123456");
         accInfo.put("repeatPassword", "123456");
 

@@ -2,6 +2,7 @@ package com.demo;
 
 import com.codeborne.selenide.Configuration;
 import com.demo.reports.Report;
+import com.demo.utils.Constants;
 import org.testng.annotations.*;
 
 import java.io.File;
@@ -14,11 +15,11 @@ public class TestBase {
     @BeforeSuite
     public void beforeSuite() {
         String reportFolder = String.join(
-            File.separator, "ExtentReport",
-            LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MMM_dd-HH_mm_ss"))
+            File.separator, Constants.REPORT_FOLDER_ROOT,
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern(Constants.REPORT_FOLDER_FORMAT))
         );
         Report.setReport(reportFolder);
-        Configuration.browserSize = "1440x900";
+        Configuration.browserSize = Constants.BROWSER_SIZE;
         Configuration.reportsFolder = reportFolder;
     }
 
@@ -31,7 +32,7 @@ public class TestBase {
 
     @BeforeMethod(alwaysRun = true)
     public void openBrowser() {
-        open("https://parabank.parasoft.com/parabank/index.htm");
+        open(Constants.URL);
     }
 
     @AfterMethod(alwaysRun = true)

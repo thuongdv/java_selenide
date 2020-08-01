@@ -24,7 +24,8 @@ public class ThrowableReport {
     }
 
     public static StackTraceElement[] getStackTrace(Throwable t) {
-        return Arrays.stream(t.getStackTrace()).filter(e -> e.toString().startsWith(PROJECT_PACKAGE)).toArray(StackTraceElement[]::new);
+        return Arrays.stream(t.getStackTrace()).
+            filter(e -> e.toString().startsWith(PROJECT_PACKAGE)).toArray(StackTraceElement[]::new);
     }
 
     public static String getDetailMessage(Throwable t) {
@@ -32,14 +33,6 @@ public class ThrowableReport {
         return message == null ? t.getMessage() : message;
     }
 
-    public static String usefulMessage(Throwable t) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(t.getClass() + "\n");
-        stringBuilder.append(getDetailMessage(t) + "\n");
-        stringBuilder.append(String.join("\n", Arrays.stream(getStackTrace(t)).map(StackTraceElement::toString).toArray(String[]::new)));
-
-        return stringBuilder.toString();
-    }
     private static String readField(Throwable t, String field) {
         try {
             return FieldUtils.readField(t, field, true).toString();

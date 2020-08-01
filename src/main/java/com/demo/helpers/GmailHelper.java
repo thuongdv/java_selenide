@@ -1,5 +1,6 @@
-package com.demo.utils;
+package com.demo.helpers;
 
+import com.demo.utils.Constants;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -24,7 +25,7 @@ import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.List;
 
-public class GmailUtil {
+public class GmailHelper {
     private static final String APPLICATION_NAME = "application name";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "src/test/resources/tokens";
@@ -42,13 +43,13 @@ public class GmailUtil {
     private List<Message> messages;
 
     @SneakyThrows
-    public GmailUtil(String query) {
+    public GmailHelper(String query) {
         this();
         this.query = query;
     }
 
     @SneakyThrows
-    public GmailUtil() {
+    public GmailHelper() {
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         this.gmailService = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
@@ -79,7 +80,7 @@ public class GmailUtil {
     }
 
     @SneakyThrows
-    public GmailUtil executeQueryWithWaitingTime() {
+    public GmailHelper executeQueryWithWaitingTime() {
         StopWatch sw = new StopWatch();
         sw.start();
         int timeInMilliseconds = Constants.EMAIL_RECEIVE_TIME_WAIT * 1000;
@@ -95,7 +96,7 @@ public class GmailUtil {
     }
 
     @SneakyThrows
-    public GmailUtil executeQuery() {
+    public GmailHelper executeQuery() {
         String gmailUser = "me";
         Gmail.Users.Messages.List list = this.gmailService.users().messages().list(gmailUser).
             setMaxResults(MESSAGE_LIST_MAX_RESULTS).setQ(this.query);
@@ -114,7 +115,7 @@ public class GmailUtil {
 
     public static void main(String[] args) {
         String q = "from:{from} subject:\"{subject}\"";
-        GmailUtil gmailHelper = new GmailUtil(q).executeQueryWithWaitingTime();
+        GmailHelper gmailHelper = new GmailHelper(q).executeQueryWithWaitingTime();
         Assert.assertTrue(
             gmailHelper.doMessagesExist(),
             String.format("There is no email sent to user in %s seconds", Constants.EMAIL_RECEIVE_TIME_WAIT)

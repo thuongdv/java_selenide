@@ -1,5 +1,5 @@
 target
 .idea
-ExtentReport
+test-output
 poc.iml
 build
