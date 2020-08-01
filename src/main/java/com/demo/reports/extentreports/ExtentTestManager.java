@@ -3,7 +3,7 @@ package com.demo.reports.extentreports;
 import com.aventstack.extentreports.ExtentTest;
 
 public class ExtentTestManager {
-    private static volatile ThreadLocal<ExtentTest> extentTests = new ThreadLocal<>();
+    private static final ThreadLocal<ExtentTest> extentTests = new InheritableThreadLocal<>();
 
     public static ExtentTest getExtentTest() {
         return extentTests.get();

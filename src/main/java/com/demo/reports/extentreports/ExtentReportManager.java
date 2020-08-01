@@ -6,7 +6,7 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import java.io.File;
 
 public class ExtentReportManager {
-    private static volatile ThreadLocal<ExtentReports> extentReports = new ThreadLocal<>();
+    private static final ThreadLocal<ExtentReports> extentReports = new InheritableThreadLocal<>();
 
     public static ExtentReports getExtentReport() {
         return extentReports.get();

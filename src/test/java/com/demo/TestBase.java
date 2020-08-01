@@ -13,7 +13,10 @@ import static com.codeborne.selenide.Selenide.*;
 public class TestBase {
     @BeforeSuite
     public void beforeSuite() {
-        String reportFolder = String.join(File.separator, "ExtentReport", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MMM_dd-HH_mm_ss")));
+        String reportFolder = String.join(
+            File.separator, "ExtentReport",
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MMM_dd-HH_mm_ss"))
+        );
         Report.setReport(reportFolder);
         Configuration.browserSize = "1440x900";
         Configuration.reportsFolder = reportFolder;
