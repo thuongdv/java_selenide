@@ -10,6 +10,6 @@ This is an example of using Selenide test framework.
 2. Open CMD/terminal then type `mvn install`
 
 # Run test and view result
-1. Type `mvn test` to run test
+1. Type `mvn clean test` to run test
 
 The test result locates in the test-ouput folder
