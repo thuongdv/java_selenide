@@ -1,5 +1,6 @@
 package com.demo.utils;
 
+import lombok.val;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
 import java.util.Arrays;
@@ -12,7 +13,7 @@ public class ThrowableReport {
     private static final String PROJECT_PACKAGE = "com.demo";
 
     public static Throwable newThrowable(Throwable t) {
-        String detailMessage = getDetailMessage(t);
+        val detailMessage = getDetailMessage(t);
         Throwable nt = new Throwable(detailMessage);
         nt.setStackTrace(getStackTrace(t));
 
@@ -29,7 +30,7 @@ public class ThrowableReport {
     }
 
     public static String getDetailMessage(Throwable t) {
-        String message = readField(t, "detailMessage");
+        val message = readField(t, "detailMessage");
         return message == null ? t.getMessage() : message;
     }
 

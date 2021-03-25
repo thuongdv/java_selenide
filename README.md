@@ -7,9 +7,9 @@ This is an example of using Selenide test framework.
 
 # Install dependencies
 1. CD to the project folder
-2. Open CMD/terminal then type `mvn install`
+2. Open CMD/terminal then type `./mvnw install`
 
 # Run test and view result
-1. Type `mvn clean test` to run test
+1. Type `./mvnw clean test` to run test
 
-The test result locates in the test-ouput folder
+The test result locates in the test-output folder

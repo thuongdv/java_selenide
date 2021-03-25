@@ -1,30 +1,62 @@
 package com.demo.reports;
 
+
 import com.demo.reports.extentreports.ExtentReportManager;
 import com.demo.reports.extentreports.ExtentTestManager;
+import com.demo.utils.ThrowableReport;
+import lombok.extern.log4j.Log4j2;
+
 
 /**
- * This class is used as a report controller.
- * Once we change to use another report instead of ExtentReports, just change the content of these methods.
+ * Singleton: https://www.journaldev.com/171/thread-safety-in-java-singleton-classes
  */
-public class Report {
-    public static void info(String message) {
+@Log4j2
+public class Report implements IReport {
+    private static volatile Report instance;
+    private static final Object mutex = new Object();
+
+    private Report() {
+    }
+
+    public static Report getInstance() {
+        Report result = instance;
+        if (result == null) {
+            log.debug("Get report instance");
+            synchronized (mutex) {
+                result = instance;
+                if (result == null) instance = result = new Report();
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public void info(String message) {
         ExtentTestManager.getExtentTest().info(message);
     }
 
-    public static void debug(String message) {
+    @Override
+    public void fail(Throwable throwable) {
+        ExtentTestManager.getExtentTest().fail(ThrowableReport.newThrowable(throwable));
+    }
+
+    @Override
+    public void debug(String message) {
         ExtentTestManager.getExtentTest().debug(message);
     }
 
-    public static void setReport(String folder) {
+    @Override
+    public void setReport(String folder) {
         ExtentReportManager.setExtentReport(folder);
     }
 
-    public static void flushReport() {
+    @Override
+    public void flushReport() {
         ExtentReportManager.getExtentReport().flush();
     }
 
-    public static void setReportTest(String testName) {
+    @Override
+    public void setReportTest(String testName) {
         ExtentTestManager.setExtentTest(testName);
     }
 }

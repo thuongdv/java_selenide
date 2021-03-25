@@ -3,25 +3,16 @@ package com.demo;
 import com.codeborne.selenide.Configuration;
 import com.demo.reports.Report;
 import com.demo.utils.Constants;
-import org.testng.annotations.*;
-
-import java.io.File;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 
 import static com.codeborne.selenide.Selenide.*;
 
 public class TestBase {
-    @BeforeSuite
-    public void beforeSuite() {
-        String reportFolder = String.join(
-            File.separator, Constants.REPORT_FOLDER_ROOT,
-            LocalDateTime.now().format(DateTimeFormatter.ofPattern(Constants.REPORT_FOLDER_FORMAT))
-        );
-        Report.setReport(reportFolder);
-        Configuration.browserSize = Constants.BROWSER_SIZE;
-        Configuration.reportsFolder = reportFolder;
-    }
 
     @Parameters({"browser", "headless"})
     @BeforeTest(alwaysRun = true)
@@ -39,10 +30,14 @@ public class TestBase {
     public void cleanup() {
         clearBrowserCookies();
         clearBrowserLocalStorage();
+
+        // Flush the content to the consumer every test so that we know the current test run. And refrain from the
+        // unexpected exception that causes the report is not generated
+        Report.getInstance().flushReport();
     }
 
     @AfterSuite
     public void afterSuite() {
-        Report.flushReport();
+        Report.getInstance().flushReport();
     }
 }
