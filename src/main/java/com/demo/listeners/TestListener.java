@@ -41,14 +41,14 @@ public class TestListener implements ITestListener {
     @Override
     public void onTestFailure(ITestResult result) {
         val throwable = result.getThrowable();
-        ExtentTestManager.getExtentTest().fatal(ThrowableReport.newThrowable(throwable));
+        ExtentTestManager.getExtentTest().fail(ThrowableReport.newThrowable(throwable));
         val screenshot = ThrowableReport.getScreenshot(throwable);
         if (screenshot == null) return;
 
         val node = ExtentTestManager.getExtentTest().createNode("Debugger information");
         val file = FilenameUtils.getBaseName(screenshot);
-        node.fatal("", MediaEntityBuilder.createScreenCaptureFromPath(screenshot).build());
+        node.fail("", MediaEntityBuilder.createScreenCaptureFromPath(file + ".png").build());
         val pageSourceLink = "<a href=\"%s.html\" target=\"_blank\">Page source</a>";
-        node.fatal(String.format(pageSourceLink, file));
+        node.fail(String.format(pageSourceLink, file));
     }
 }

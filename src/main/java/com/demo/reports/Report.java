@@ -1,6 +1,7 @@
 package com.demo.reports;
 
 
+import com.aventstack.extentreports.Status;
 import com.demo.reports.extentreports.ExtentReportManager;
 import com.demo.reports.extentreports.ExtentTestManager;
 import com.demo.utils.ThrowableReport;
@@ -42,7 +43,7 @@ public class Report implements IReport {
 
     @Override
     public void debug(String message) {
-        ExtentTestManager.getExtentTest().debug(message);
+        ExtentTestManager.getExtentTest().log(Status.INFO, message);
     }
 
     @Override
